@@ -1,0 +1,385 @@
+EmpID,FullName,Department,AppName
+1,Employee_1,IT,Microsoft 365
+1,Employee_1,IT,Zoom
+2,Employee_2,IT,Microsoft 365
+2,Employee_2,IT,Zoom
+3,Employee_3,Marketing,Microsoft 365
+3,Employee_3,Marketing,Zoom
+4,Employee_4,IT,Microsoft 365
+4,Employee_4,IT,Zoom
+5,Employee_5,HR,Microsoft 365
+5,Employee_5,HR,Zoom
+6,Employee_6,Sales,Microsoft 365
+6,Employee_6,Sales,Zoom
+7,Employee_7,Sales,Microsoft 365
+7,Employee_7,Sales,Zoom
+8,Employee_8,Marketing,Microsoft 365
+8,Employee_8,Marketing,Zoom
+9,Employee_9,HR,Microsoft 365
+9,Employee_9,HR,Zoom
+10,Employee_10,HR,Microsoft 365
+10,Employee_10,HR,Zoom
+11,Employee_11,Sales,Microsoft 365
+11,Employee_11,Sales,Zoom
+12,Employee_12,IT,Microsoft 365
+12,Employee_12,IT,Zoom
+13,Employee_13,Finance,Microsoft 365
+13,Employee_13,Finance,Zoom
+14,Employee_14,Sales,Microsoft 365
+14,Employee_14,Sales,Zoom
+15,Employee_15,Finance,Microsoft 365
+15,Employee_15,Finance,Zoom
+16,Employee_16,HR,Microsoft 365
+16,Employee_16,HR,Zoom
+17,Employee_17,Marketing,Microsoft 365
+17,Employee_17,Marketing,Zoom
+18,Employee_18,Finance,Microsoft 365
+18,Employee_18,Finance,Zoom
+19,Employee_19,Finance,Microsoft 365
+19,Employee_19,Finance,Zoom
+20,Employee_20,Sales,Microsoft 365
+20,Employee_20,Sales,Zoom
+21,Employee_21,HR,Microsoft 365
+21,Employee_21,HR,Zoom
+22,Employee_22,Finance,Microsoft 365
+22,Employee_22,Finance,Zoom
+23,Employee_23,Finance,Microsoft 365
+23,Employee_23,Finance,Zoom
+24,Employee_24,IT,Microsoft 365
+24,Employee_24,IT,Zoom
+25,Employee_25,Marketing,Microsoft 365
+25,Employee_25,Marketing,Zoom
+26,Employee_26,Marketing,Microsoft 365
+26,Employee_26,Marketing,Zoom
+27,Employee_27,Finance,Microsoft 365
+27,Employee_27,Finance,Zoom
+28,Employee_28,Sales,Microsoft 365
+28,Employee_28,Sales,Zoom
+29,Employee_29,IT,Microsoft 365
+29,Employee_29,IT,Zoom
+31,Employee_31,IT,Microsoft 365
+31,Employee_31,IT,Zoom
+32,Employee_32,IT,Microsoft 365
+32,Employee_32,IT,Zoom
+33,Employee_33,IT,Microsoft 365
+33,Employee_33,IT,Zoom
+34,Employee_34,Marketing,Microsoft 365
+34,Employee_34,Marketing,Zoom
+35,Employee_35,Finance,Microsoft 365
+35,Employee_35,Finance,Zoom
+36,Employee_36,HR,Microsoft 365
+36,Employee_36,HR,Zoom
+37,Employee_37,IT,Microsoft 365
+37,Employee_37,IT,Zoom
+38,Employee_38,Marketing,Microsoft 365
+38,Employee_38,Marketing,Zoom
+39,Employee_39,Marketing,Microsoft 365
+39,Employee_39,Marketing,Zoom
+40,Employee_40,HR,Microsoft 365
+40,Employee_40,HR,Zoom
+41,Employee_41,Finance,Microsoft 365
+41,Employee_41,Finance,Zoom
+42,Employee_42,Finance,Microsoft 365
+42,Employee_42,Finance,Zoom
+43,Employee_43,Finance,Microsoft 365
+43,Employee_43,Finance,Zoom
+44,Employee_44,HR,Microsoft 365
+44,Employee_44,HR,Zoom
+45,Employee_45,Marketing,Microsoft 365
+45,Employee_45,Marketing,Zoom
+46,Employee_46,Marketing,Microsoft 365
+46,Employee_46,Marketing,Zoom
+47,Employee_47,Marketing,Microsoft 365
+47,Employee_47,Marketing,Zoom
+48,Employee_48,Marketing,Microsoft 365
+48,Employee_48,Marketing,Zoom
+49,Employee_49,Finance,Microsoft 365
+49,Employee_49,Finance,Zoom
+50,Employee_50,HR,Microsoft 365
+50,Employee_50,HR,Zoom
+51,Employee_51,Finance,Microsoft 365
+51,Employee_51,Finance,Zoom
+52,Employee_52,Sales,Microsoft 365
+52,Employee_52,Sales,Zoom
+53,Employee_53,Sales,Microsoft 365
+53,Employee_53,Sales,Zoom
+54,Employee_54,IT,Microsoft 365
+54,Employee_54,IT,Zoom
+55,Employee_55,HR,Microsoft 365
+55,Employee_55,HR,Zoom
+56,Employee_56,Finance,Microsoft 365
+56,Employee_56,Finance,Zoom
+57,Employee_57,Finance,Microsoft 365
+57,Employee_57,Finance,Zoom
+58,Employee_58,IT,Microsoft 365
+58,Employee_58,IT,Zoom
+59,Employee_59,IT,Microsoft 365
+59,Employee_59,IT,Zoom
+60,Employee_60,IT,Microsoft 365
+60,Employee_60,IT,Zoom
+61,Employee_61,HR,Microsoft 365
+61,Employee_61,HR,Zoom
+62,Employee_62,Finance,Microsoft 365
+62,Employee_62,Finance,Zoom
+63,Employee_63,Marketing,Microsoft 365
+63,Employee_63,Marketing,Zoom
+64,Employee_64,IT,Microsoft 365
+64,Employee_64,IT,Zoom
+65,Employee_65,IT,Microsoft 365
+65,Employee_65,IT,Zoom
+66,Employee_66,Marketing,Microsoft 365
+66,Employee_66,Marketing,Zoom
+67,Employee_67,Sales,Microsoft 365
+67,Employee_67,Sales,Zoom
+68,Employee_68,IT,Microsoft 365
+68,Employee_68,IT,Zoom
+69,Employee_69,Sales,Microsoft 365
+69,Employee_69,Sales,Zoom
+70,Employee_70,IT,Microsoft 365
+70,Employee_70,IT,Zoom
+71,Employee_71,Marketing,Microsoft 365
+71,Employee_71,Marketing,Zoom
+72,Employee_72,Sales,Microsoft 365
+72,Employee_72,Sales,Zoom
+74,Employee_74,Marketing,Microsoft 365
+74,Employee_74,Marketing,Zoom
+75,Employee_75,Finance,Microsoft 365
+75,Employee_75,Finance,Zoom
+76,Employee_76,Marketing,Microsoft 365
+76,Employee_76,Marketing,Zoom
+77,Employee_77,Sales,Microsoft 365
+77,Employee_77,Sales,Zoom
+78,Employee_78,HR,Microsoft 365
+78,Employee_78,HR,Zoom
+79,Employee_79,IT,Microsoft 365
+79,Employee_79,IT,Zoom
+80,Employee_80,HR,Microsoft 365
+80,Employee_80,HR,Zoom
+81,Employee_81,Sales,Microsoft 365
+81,Employee_81,Sales,Zoom
+82,Employee_82,Sales,Microsoft 365
+82,Employee_82,Sales,Zoom
+83,Employee_83,HR,Microsoft 365
+83,Employee_83,HR,Zoom
+84,Employee_84,HR,Microsoft 365
+84,Employee_84,HR,Zoom
+85,Employee_85,Finance,Microsoft 365
+85,Employee_85,Finance,Zoom
+86,Employee_86,IT,Microsoft 365
+86,Employee_86,IT,Zoom
+87,Employee_87,Marketing,Microsoft 365
+87,Employee_87,Marketing,Zoom
+88,Employee_88,Sales,Microsoft 365
+88,Employee_88,Sales,Zoom
+89,Employee_89,Marketing,Microsoft 365
+89,Employee_89,Marketing,Zoom
+90,Employee_90,IT,Microsoft 365
+90,Employee_90,IT,Zoom
+91,Employee_91,Marketing,Microsoft 365
+91,Employee_91,Marketing,Zoom
+93,Employee_93,Sales,Microsoft 365
+93,Employee_93,Sales,Zoom
+94,Employee_94,HR,Microsoft 365
+94,Employee_94,HR,Zoom
+95,Employee_95,IT,Microsoft 365
+95,Employee_95,IT,Zoom
+96,Employee_96,IT,Microsoft 365
+96,Employee_96,IT,Zoom
+97,Employee_97,Sales,Microsoft 365
+97,Employee_97,Sales,Zoom
+98,Employee_98,Finance,Microsoft 365
+98,Employee_98,Finance,Zoom
+99,Employee_99,Marketing,Microsoft 365
+99,Employee_99,Marketing,Zoom
+100,Employee_100,Finance,Microsoft 365
+100,Employee_100,Finance,Zoom
+101,Employee_101,HR,Microsoft 365
+101,Employee_101,HR,Zoom
+102,Employee_102,Finance,Microsoft 365
+102,Employee_102,Finance,Zoom
+103,Employee_103,IT,Microsoft 365
+103,Employee_103,IT,Zoom
+104,Employee_104,Marketing,Microsoft 365
+104,Employee_104,Marketing,Zoom
+105,Employee_105,Sales,Microsoft 365
+105,Employee_105,Sales,Zoom
+106,Employee_106,IT,Microsoft 365
+106,Employee_106,IT,Zoom
+107,Employee_107,Sales,Microsoft 365
+107,Employee_107,Sales,Zoom
+108,Employee_108,Sales,Microsoft 365
+108,Employee_108,Sales,Zoom
+109,Employee_109,IT,Microsoft 365
+109,Employee_109,IT,Zoom
+110,Employee_110,Finance,Microsoft 365
+110,Employee_110,Finance,Zoom
+111,Employee_111,Finance,Microsoft 365
+111,Employee_111,Finance,Zoom
+112,Employee_112,Sales,Microsoft 365
+112,Employee_112,Sales,Zoom
+113,Employee_113,HR,Microsoft 365
+113,Employee_113,HR,Zoom
+114,Employee_114,IT,Microsoft 365
+114,Employee_114,IT,Zoom
+115,Employee_115,IT,Microsoft 365
+115,Employee_115,IT,Zoom
+116,Employee_116,Sales,Microsoft 365
+116,Employee_116,Sales,Zoom
+117,Employee_117,Finance,Microsoft 365
+117,Employee_117,Finance,Zoom
+118,Employee_118,Marketing,Microsoft 365
+118,Employee_118,Marketing,Zoom
+119,Employee_119,HR,Microsoft 365
+119,Employee_119,HR,Zoom
+120,Employee_120,HR,Microsoft 365
+120,Employee_120,HR,Zoom
+121,Employee_121,HR,Microsoft 365
+121,Employee_121,HR,Zoom
+122,Employee_122,Marketing,Microsoft 365
+122,Employee_122,Marketing,Zoom
+123,Employee_123,Marketing,Microsoft 365
+123,Employee_123,Marketing,Zoom
+124,Employee_124,HR,Microsoft 365
+124,Employee_124,HR,Zoom
+125,Employee_125,IT,Microsoft 365
+125,Employee_125,IT,Zoom
+127,Employee_127,Finance,Microsoft 365
+127,Employee_127,Finance,Zoom
+128,Employee_128,IT,Microsoft 365
+128,Employee_128,IT,Zoom
+129,Employee_129,Sales,Microsoft 365
+129,Employee_129,Sales,Zoom
+130,Employee_130,Marketing,Microsoft 365
+130,Employee_130,Marketing,Zoom
+131,Employee_131,Marketing,Microsoft 365
+131,Employee_131,Marketing,Zoom
+132,Employee_132,Sales,Microsoft 365
+132,Employee_132,Sales,Zoom
+133,Employee_133,Sales,Microsoft 365
+133,Employee_133,Sales,Zoom
+134,Employee_134,Sales,Microsoft 365
+134,Employee_134,Sales,Zoom
+135,Employee_135,Finance,Microsoft 365
+135,Employee_135,Finance,Zoom
+136,Employee_136,HR,Microsoft 365
+136,Employee_136,HR,Zoom
+137,Employee_137,Marketing,Microsoft 365
+137,Employee_137,Marketing,Zoom
+138,Employee_138,HR,Microsoft 365
+138,Employee_138,HR,Zoom
+139,Employee_139,Marketing,Microsoft 365
+139,Employee_139,Marketing,Zoom
+140,Employee_140,HR,Microsoft 365
+140,Employee_140,HR,Zoom
+141,Employee_141,HR,Microsoft 365
+141,Employee_141,HR,Zoom
+142,Employee_142,Sales,Microsoft 365
+142,Employee_142,Sales,Zoom
+143,Employee_143,IT,Microsoft 365
+143,Employee_143,IT,Zoom
+144,Employee_144,Finance,Microsoft 365
+144,Employee_144,Finance,Zoom
+145,Employee_145,IT,Microsoft 365
+145,Employee_145,IT,Zoom
+146,Employee_146,IT,Microsoft 365
+146,Employee_146,IT,Zoom
+147,Employee_147,Finance,Microsoft 365
+147,Employee_147,Finance,Zoom
+148,Employee_148,IT,Microsoft 365
+148,Employee_148,IT,Zoom
+149,Employee_149,Finance,Microsoft 365
+149,Employee_149,Finance,Zoom
+150,Employee_150,Marketing,Microsoft 365
+150,Employee_150,Marketing,Zoom
+151,Employee_151,HR,Microsoft 365
+151,Employee_151,HR,Zoom
+152,Employee_152,IT,Microsoft 365
+152,Employee_152,IT,Zoom
+153,Employee_153,Finance,Microsoft 365
+153,Employee_153,Finance,Zoom
+154,Employee_154,Sales,Microsoft 365
+154,Employee_154,Sales,Zoom
+155,Employee_155,Marketing,Microsoft 365
+155,Employee_155,Marketing,Zoom
+156,Employee_156,Marketing,Microsoft 365
+156,Employee_156,Marketing,Zoom
+157,Employee_157,IT,Microsoft 365
+157,Employee_157,IT,Zoom
+160,Employee_160,IT,Microsoft 365
+160,Employee_160,IT,Zoom
+161,Employee_161,Sales,Microsoft 365
+161,Employee_161,Sales,Zoom
+162,Employee_162,Finance,Microsoft 365
+162,Employee_162,Finance,Zoom
+163,Employee_163,IT,Microsoft 365
+163,Employee_163,IT,Zoom
+164,Employee_164,IT,Microsoft 365
+164,Employee_164,IT,Zoom
+165,Employee_165,IT,Microsoft 365
+165,Employee_165,IT,Zoom
+166,Employee_166,Sales,Microsoft 365
+166,Employee_166,Sales,Zoom
+167,Employee_167,Finance,Microsoft 365
+167,Employee_167,Finance,Zoom
+168,Employee_168,Finance,Microsoft 365
+168,Employee_168,Finance,Zoom
+169,Employee_169,HR,Microsoft 365
+169,Employee_169,HR,Zoom
+171,Employee_171,Sales,Microsoft 365
+171,Employee_171,Sales,Zoom
+172,Employee_172,Marketing,Microsoft 365
+172,Employee_172,Marketing,Zoom
+173,Employee_173,Sales,Microsoft 365
+173,Employee_173,Sales,Zoom
+174,Employee_174,Marketing,Microsoft 365
+174,Employee_174,Marketing,Zoom
+175,Employee_175,Finance,Microsoft 365
+175,Employee_175,Finance,Zoom
+176,Employee_176,HR,Microsoft 365
+176,Employee_176,HR,Zoom
+177,Employee_177,Marketing,Microsoft 365
+177,Employee_177,Marketing,Zoom
+178,Employee_178,Marketing,Microsoft 365
+178,Employee_178,Marketing,Zoom
+179,Employee_179,HR,Microsoft 365
+179,Employee_179,HR,Zoom
+180,Employee_180,IT,Microsoft 365
+180,Employee_180,IT,Zoom
+181,Employee_181,Marketing,Microsoft 365
+181,Employee_181,Marketing,Zoom
+182,Employee_182,Marketing,Microsoft 365
+182,Employee_182,Marketing,Zoom
+183,Employee_183,Sales,Microsoft 365
+183,Employee_183,Sales,Zoom
+184,Employee_184,IT,Microsoft 365
+184,Employee_184,IT,Zoom
+185,Employee_185,Marketing,Microsoft 365
+185,Employee_185,Marketing,Zoom
+186,Employee_186,IT,Microsoft 365
+186,Employee_186,IT,Zoom
+187,Employee_187,Marketing,Microsoft 365
+187,Employee_187,Marketing,Zoom
+188,Employee_188,IT,Microsoft 365
+188,Employee_188,IT,Zoom
+189,Employee_189,Marketing,Microsoft 365
+189,Employee_189,Marketing,Zoom
+191,Employee_191,IT,Microsoft 365
+191,Employee_191,IT,Zoom
+192,Employee_192,IT,Microsoft 365
+192,Employee_192,IT,Zoom
+193,Employee_193,Sales,Microsoft 365
+193,Employee_193,Sales,Zoom
+194,Employee_194,Marketing,Microsoft 365
+194,Employee_194,Marketing,Zoom
+195,Employee_195,IT,Microsoft 365
+195,Employee_195,IT,Zoom
+196,Employee_196,Marketing,Microsoft 365
+196,Employee_196,Marketing,Zoom
+197,Employee_197,HR,Microsoft 365
+197,Employee_197,HR,Zoom
+198,Employee_198,Sales,Microsoft 365
+198,Employee_198,Sales,Zoom
+199,Employee_199,IT,Microsoft 365
+199,Employee_199,IT,Zoom
+200,Employee_200,Marketing,Microsoft 365
+200,Employee_200,Marketing,Zoom
