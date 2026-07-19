@@ -1,0 +1,181 @@
+```{r}
+# 1. Tải thư viện cần thiết
+library(DBI)
+library(RMariaDB)
+library(dotenv)
+library(dplyr)    # Xử lý dữ liệu
+library(cluster)  # Thuật toán phân cụm
+library(tidyr)
+library(factoextra)
+library(ggplot2)
+```
+```{r}
+install.packages("dplyr")
+install.packages("cluster")
+```
+```{r}
+install.packages("tidyr")
+```
+```{r}
+install.packages("factoextra")
+```
+
+
+```{r}
+# 2. Mở kết nối Database
+load_dot_env()
+con <- dbConnect(RMariaDB::MariaDB(), 
+                 host = Sys.getenv("MYSQL_SERVER"),
+                 port = as.integer(Sys.getenv("MYSQL_PORT")),
+                 user = Sys.getenv("MYSQL_USER"),
+                 password = Sys.getenv("MYSQL_PASS"),
+                 dbname = Sys.getenv("MYSQL_DB"))
+```
+
+```{r}
+# 3. Kéo dữ liệu từ Database (Giả sử ta dùng view vw_user_software_activity)
+# 1. Lấy danh sách toàn bộ các bảng đang có trong Database
+all_tables <- dbListTables(con)
+print(paste(" TÌM THẤY", length(all_tables), "BẢNG/VIEW. ĐANG TẢI TOP 10 DÒNG..."))
+
+# 2. Tạo một danh sách (list) rỗng để chứa dữ liệu
+data_preview <- list()
+
+# 3. Dùng vòng lặp quét qua từng bảng, chỉ lấy Top 10
+for (tbl in all_tables) {
+  # Tạo câu lệnh SQL động có chứa chữ LIMIT 10
+  sql_query <- paste0("SELECT * FROM ", tbl, " LIMIT 10")
+  
+  # Thực thi lệnh và lưu vào danh sách
+  data_preview[[tbl]] <- dbGetQuery(con, sql_query)
+  
+  # In kết quả ra màn hình để xem trước
+  print(paste("========== BẢNG:", toupper(tbl), "=========="))
+  print(data_preview[[tbl]])
+  print("--------------------------------------------------")
+}
+```
+```{r}
+df_raw <- dbGetQuery(con, "SELECT * FROM vw_user_software_activity")
+```
+
+```{r}
+# 4. Tiền xử lý dữ liệu cho K-Means
+# K-Means chỉ chạy trên dữ liệu số. Ta cần lọc các cột số (như số giờ dùng, số lần login)
+df_model <- df_raw %>% 
+  select(where(is.numeric)) %>%  # Chỉ lấy cột dạng số
+  mutate(across(everything(), ~tidyr::replace_na(., 0))) # Điền 0 vào ô trống (NA)
+
+# Chuẩn hóa dữ liệu (Z-score scaling) - Bước BẮT BUỘC để các thang đo không bị lệch
+df_scaled <- scale(df_model)
+```
+
+```{r}
+# 4. Tiền xử lý dữ liệu (Đã bổ sung bộ lọc chống lỗi chia cho 0)
+df_model <- df_raw %>%
+  select(where(is.numeric)) %>% 
+  select(-any_of(c("EmpID", "UserID", "ID"))) %>% 
+  mutate(across(everything(), ~tidyr::replace_na(., 0))) %>%
+  select(where(~ var(.) > 0)) # BÍ QUYẾT LÀ ĐÂY: Loại bỏ các cột mà mọi giá trị đều giống hệt nhau
+
+# Chuẩn hóa dữ liệu an toàn
+df_scaled <- scale(df_model)
+
+# 5. Huấn luyện mô hình K-Means
+set.seed(123) 
+kmeans_result <- kmeans(df_scaled, centers = 3, nstart = 25)
+
+# 6. Gán nhãn Rủi ro vào dữ liệu gốc
+df_raw$Risk_Cluster_ID <- kmeans_result$cluster
+
+# 7. Đổi ID cụm thành nhãn Text
+df_raw <- df_raw %>%
+  mutate(ShadowIT_Risk_Level = case_when(
+    Risk_Cluster_ID == 1 ~ "Low",
+    Risk_Cluster_ID == 2 ~ "Medium",
+    Risk_Cluster_ID == 3 ~ "High",
+    TRUE ~ "Unknown"
+  ))
+
+# 8. Xuất kết quả ngược lại MySQL
+dbWriteTable(con, name = "fact_shadow_it_clustered", value = df_raw, overwrite = TRUE, row.names = FALSE)
+print("XONG! Đã xử lý lỗi NaN và lưu bảng fact_shadow_it_clustered thành công vào MySQL!")
+
+# 9. Đóng kết nối
+dbDisconnect(con)
+```
+
+```{r}
+# 1. Gọi thư viện
+library(factoextra)
+
+# 2. Đếm số lượng điểm dữ liệu khác biệt hiện có
+n_distinct_rows <- nrow(unique(df_scaled))
+print(paste("Số dòng dữ liệu khác biệt hiện có:", n_distinct_rows))
+
+# 3. Tự động tính toán số cụm K tối đa có thể thử (giới hạn cao nhất là 10)
+# K bắt buộc phải nhỏ hơn số dòng dữ liệu hiện tại
+safe_k_max <- min(10, n_distinct_rows - 1)
+
+# 4. Vẽ biểu đồ nếu đủ dữ liệu
+if (safe_k_max >= 2) {
+  fviz_nbclust(df_scaled, kmeans, method = "wss", k.max = safe_k_max) +
+    geom_vline(xintercept = 3, linetype = 2, color = "red") +
+    labs(title = "Phương pháp Elbow", 
+         subtitle = paste("Đánh giá mức độ tối ưu với dữ liệu hiện tại (K tối đa thử nghiệm =", safe_k_max, ")"))
+} else {
+  print("Dữ liệu của bạn đang có quá ít (dưới 3 dòng) để chạy phương pháp Elbow. Hãy thêm dữ liệu vào Database trước!")
+}
+```
+
+```{r}
+ncol(df_scaled)
+colnames(df_scaled)
+colnames(df_raw)
+```
+```{r}
+df_for_clustering <- df_raw %>%
+  # THAY TÊN CỘT DƯỚI ĐÂY BẰNG TÊN CỘT THỰC TẾ CỦA BẠN
+  select(Status, AppName, ApprovedStatus,MonthlyCostPerUser,TotalLogins,ShadowIT_Risk_Level) 
+
+# Chuẩn hóa dữ liệu
+df_for_clustering <- df_raw %>%
+  # CHỈ chọn các cột dạng số
+  select(MonthlyCostPerUser, TotalLogins) 
+
+# Chuẩn hóa dữ liệu
+df_scaled <- scale(df_for_clustering)
+```
+
+```{r}
+apply(df_for_clustering_reprepared, 2, sd)
+```
+```{r}
+# Tự động lọc các cột có phương sai (variance) > 0
+df_valid <- df_for_clustering_reprepared[, apply(df_for_clustering_reprepared, 2, var) != 0]
+
+# Scale trên tập dữ liệu đã lọc
+df_scaled_new <- scale(df_valid)
+```
+
+
+
+```{r}
+# 1. Chạy K-Means trên 1 biến (chỉ chuẩn hóa cột Cost)
+set.seed(123)
+km_1d <- kmeans(scale(df_raw$MonthlyCostPerUser), centers = 3, nstart = 25)
+
+# 2. Gắn nhãn cụm (Risk Cluster) ngược lại vào bảng dữ liệu gốc
+df_raw$Risk_Cluster <- as.factor(km_1d$cluster)
+
+# 3. Trực quan hóa 1D bằng ggplot2
+library(ggplot2)
+ggplot(df_raw, aes(x = MonthlyCostPerUser, fill = Risk_Cluster)) +
+  geom_density(alpha = 0.6) +
+  theme_minimal() +
+  scale_fill_manual(values = c("#2E9FDF", "#E7B800", "#FC4E07")) +
+  labs(title = "Phân cụm rủi ro Shadow IT theo chi phí (1D)",
+       x = "Chi phí hàng tháng", y = "Mật độ phân bổ")
+```
+
+

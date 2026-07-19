@@ -1,0 +1,48 @@
+
+```{r}
+install.packages("dotenv")
+```
+
+```{r}
+install.packages("DBI")
+```
+```{r}
+install.packages("RMariaDB")
+```
+
+
+
+```{r}
+library(DBI)
+library(RMariaDB)
+library(dotenv)
+```
+
+```{r}
+# 1. Tải thông tin bảo mật từ file .env
+load_dot_env()
+
+# 2. Thực hiện kết nối
+con <- dbConnect(RMariaDB::MariaDB(), 
+                 host = Sys.getenv("MYSQL_SERVER"),
+                 port = as.integer(Sys.getenv("MYSQL_PORT")),
+                 user = Sys.getenv("MYSQL_USER"),
+                 password = Sys.getenv("MYSQL_PASS"),
+                 dbname = Sys.getenv("MYSQL_DB"))
+
+# 3. Lệnh kiểm tra: In ra danh sách các bảng đang có trong Database
+print("KẾT NỐI THÀNH CÔNG! Dưới đây là các bảng trong Database của bạn:")
+print(dbListTables(con))
+
+# 4. Đóng kết nối ngay sau khi test xong
+dbDisconnect(con)
+```
+
+
+```{r}
+print("✅ KẾT NỐI THÀNH CÔNG! Dưới đây là các bảng trong Database của bạn:")
+print(dbListTables(con))
+
+dbDisconnect(con)
+```
+
