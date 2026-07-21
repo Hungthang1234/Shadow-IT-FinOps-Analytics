@@ -1,0 +1,45 @@
+```{r}
+library(dplyr)
+library(cluster)
+library(factoextra)
+```
+```{r}
+# 1. Đọc dữ liệu từ Python xuất ra
+df <- read.csv("../exports/shadow_it_finops_features.csv")
+```
+
+```{r}
+# 2. Lựa chọn các biến liên tục để đưa vào mô hình K-Means
+# Bỏ qua các cột phân loại như UserID, Department, AppName...
+df_features <- df %>% 
+  select(TotalLogins, MonthlyCostPerUser, Security_Risk_Score, Waste_Risk_Score, TotalInvoiceAmount)
+```
+
+```{r}
+# 3. Chuẩn hóa dữ liệu (Z-score scaling)
+# Bước này cực kỳ quan trọng vì 'TotalLogins' và 'TotalInvoiceAmount' khác hẳn nhau về đơn vị đo
+df_scaled <- scale(df_features)
+```
+
+```{r}
+# 4. Tìm số cụm (k) tối ưu bằng phương pháp Elbow
+fviz_nbclust(df_scaled, kmeans, method = "wss") +
+  labs(title = "Phương pháp Elbow để tìm số cụm K tối ưu")
+```
+```{r}
+# Nhìn vào biểu đồ, giả sử điểm gãy (elbow) rơi vào k = 3 hoặc 4. 
+# Giả sử chọn k = 4:
+set.seed(123) # Cố định seed để kết quả chạy không bị thay đổi
+kmeans_model <- kmeans(df_scaled, centers = 4, nstart = 25)
+```
+
+```{r}
+# 5. Gắn nhãn cụm (Cluster) ngược lại vào bảng dữ liệu gốc ban đầu
+df$Cluster <- as.factor(kmeans_model$cluster)
+```
+
+```{r}
+# Xem kết quả phân cụm
+head(df)
+```
+
