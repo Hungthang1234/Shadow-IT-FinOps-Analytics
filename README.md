@@ -1,62 +1,54 @@
-\# 🛡️ Phân cụm Rủi ro Shadow IT (Shadow IT Risk Clustering)
+# 🛡️ Enterprise SaaS FinOps & Shadow IT Monitoring
 
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![Python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
+![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
 
+## 📖 Tổng quan dự án (Project Overview)
+Trong bối cảnh chuyển đổi số, việc các phòng ban tự ý sử dụng phần mềm chưa được phê duyệt (Shadow IT) gây ra rủi ro lớn về bảo mật và lãng phí ngân sách (SaaS Waste). 
 
-\## 📖 Giới thiệu Dự án
+Dự án này xây dựng một luồng dữ liệu End-to-End (từ ETL, thiết kế Data Warehouse đến Machine Learning) nhằm theo dõi, phân tích và tối ưu hóa chi phí phần mềm (FinOps), đồng thời phát hiện các rủi ro bảo mật từ Shadow IT.
 
-Dự án này tập trung vào việc xây dựng một pipeline phân tích dữ liệu để giám sát và phân loại mức độ rủi ro \*\*Shadow IT\*\* (Sử dụng phần mềm công nghệ ngoài tầm kiểm soát của tổ chức). 
+**Mục tiêu chính:**
+- Phân tích chi phí SaaS hàng tháng và nhận diện sự lãng phí tài nguyên.
+- Ứng dụng thuật toán phân cụm (K-Means) để phân loại hành vi người dùng và đánh giá mức độ rủi ro (Risk Level).
+- Xây dựng hệ thống cơ sở dữ liệu chuẩn hóa, sẵn sàng tích hợp với các công cụ BI (Power BI/Tableau).
 
+---
 
+## 🏗️ Kiến trúc dữ liệu (Data Architecture)
+Hệ thống sử dụng cơ sở dữ liệu quan hệ được thiết kế chuẩn hóa để quản lý nhân sự, danh mục phần mềm, lịch sử đăng nhập SSO và hóa đơn. 
 
-Bằng cách áp dụng thuật toán học máy không giám sát \*\*K-Means Clustering\*\*, mô hình tự động gom cụm hành vi của người dùng thành các nhóm rủi ro (Low, Medium, High) dựa trên các chỉ số đo lường như chi phí hàng tháng (`MonthlyCostPerUser`), tần suất đăng nhập (`TotalLogins`), và số lượng ứng dụng trái phép.
+Dữ liệu sau khi xử lý ETL và chạy thuật toán phân cụm được lưu trữ ngược lại (write-back) vào bảng `fact_shadow_it_clustered` để phục vụ báo cáo.
 
+![Entity Relationship Diagram](link_hinh_anh_FinOps_ERD_cua_ban.png)
+> *Sơ đồ Thực thể Liên kết (ERD) được thiết kế và xuất từ MySQL Workbench.*
 
+---
 
-\## 🛠️ Công nghệ Sử dụng
+## 🧠 Phân tích & Mô hình hóa (Data Science Workflow)
+Dự án áp dụng quy trình Khoa học Dữ liệu toàn diện:
+1. **ETL & Data Cleaning (Python - Pandas/NumPy):** Xử lý dữ liệu thô, làm sạch và tạo các feature mới (Feature Engineering).
+2. **Clustering (Scikit-Learn/R):** Sử dụng thuật toán K-Means Clustering kết hợp PCA để phân nhóm mức độ rủi ro của người dùng dựa trên hành vi đăng nhập phần mềm trái phép.
+3. **Data Warehousing (MySQL):** Tạo các Views (`vw_user_software_activity`) và Stored Procedures để tự động hóa luồng báo cáo.
+4. **Visualization (R Markdown):** Trực quan hóa kết quả phân cụm (Cluster Plots) và biểu đồ phân tán rủi ro (Risk Scatter Plots).
 
-\* \*\*Truy xuất \& Quản lý dữ liệu:\*\* SQL (MySQL/SQL Server)
+---
 
-\* \*\*Mô hình hóa \& Phân tích:\*\* R (RStudio)
+## 📊 Kết quả phân tích (Key Insights)
+*(Tại đây, bạn hãy chèn 1-2 biểu đồ đẹp nhất từ R Markdown và tóm tắt 2-3 gạch đầu dòng về insight bạn tìm được. Ví dụ:)*
 
-\* \*\*Thư viện R:\*\* `dplyr` (Data manipulation), `ggplot2`, `factoextra` (Data visualization \& Clustering)
+*   **Cụm Rủi ro cao (High Risk):** Chiếm x% nhân sự, chủ yếu từ phòng ban Y, thường xuyên sử dụng các phần mềm chia sẻ file không an toàn.
+*   **Lãng phí ngân sách (FinOps Waste):** Phát hiện $Z chi phí cho các tài khoản SaaS đã được mua nhưng không có log đăng nhập trong 3 tháng qua.
 
-\* \*\*Trực quan hóa Hệ thống \& BI:\*\* draw.io, Power BI
+---
 
-
-
-\## 🚀 Trạng thái \& Kế hoạch Triển khai (Roadmap)
-
-Dự án đang trong quá trình phát triển (Work in Progress). Dưới đây là các đầu mục công việc:
-
-
-
-\- \[x] \*\*Xây dựng Data Pipeline:\*\* Thiết lập luồng trích xuất dữ liệu từ cơ sở dữ liệu (ETL).
-
-\- \[x] \*\*Data Preprocessing:\*\* Xử lý giá trị thiếu (`na.omit`), làm sạch dữ liệu và chuẩn hóa (`scale()`).
-
-\- \[x] \*\*Modeling (Giai đoạn 1):\*\* Xử lý lỗi nhiễu phương sai (variance = 0), thực hiện phân cụm 1 chiều (1D K-Means) và vẽ biểu đồ phân phối Density Plot.
-
-\- \[ ] \*\*Data Architecture:\*\* Vẽ sơ đồ cấu trúc dữ liệu (ERD) và luồng kết nối dữ liệu bằng \*\*draw.io\*\* / \*\*Power BI\*\*.
-
-\- \[ ] \*\*Data Quality Fix:\*\* Cải thiện logic truy vấn SQL đầu nguồn để đảm bảo tính biến thiên của các chỉ số hành vi.
-
-\- \[ ] \*\*Modeling (Giai đoạn 2):\*\* Chạy lại mô hình K-Means đa chiều và hoàn thiện bản đồ phân tán (Scatter Plot) với `fviz\_cluster`.
-
-
-
-\## 📂 Cấu trúc Repository
-
+## 📂 Cấu trúc Repository (Folder Structure)
 ```text
-
-├── data/                  # Chứa file dữ liệu mẫu hoặc script tạo bảng SQL
-
-├── diagrams/              # Chứa sơ đồ luồng dữ liệu và thiết kế hệ thống
-
-├── scripts/
-
-│   ├── 01\_db\_helper.R     # Script kết nối và truy xuất CSDL
-
-│   └── 02\_kmeans\_model.R  # Script xử lý dữ liệu, chuẩn hóa và huấn luyện K-Means
-
-└── README.md              # Tài liệu dự án
-
+├── data/                   # Dữ liệu mẫu (CSV/Excel)
+├── database/               # File SQL script tạo bảng, Views, Stored Procedures
+├── notebooks/              # Jupyter Notebooks cho quá trình ETL và K-Means
+├── reports/                # File Rmd và báo cáo HTML/PDF đã render
+├── images/                 # Hình ảnh ERD, biểu đồ cho file README
+└── README.md               # Tổng quan dự án

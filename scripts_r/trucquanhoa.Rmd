@@ -1,4 +1,127 @@
-```{r}
+---
+title: "Báo cáo Phân tích Trực quan: Quản trị FinOps & Shadow IT"
+author: "Nguyễn Lê Hùng Thắng"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+    highlight: tango
+---
+```{r  setup, include=FALSE}
+
+# Thiết lập mặc định cho toàn bộ báo cáo
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 6)
 
 ```
+
+## 1. Mục tiêu phân tích
+Báo cáo này ứng dụng kỹ thuật **K-Means Clustering** để phân nhóm người dùng nội bộ dựa trên hành vi đăng nhập (SSO) và chi phí phần mềm (SaaS Catalog & Invoices). Mục tiêu cốt lõi là tối ưu hóa chi phí (FinOps) và phát hiện các rủi ro bảo mật tiềm ẩn (Shadow IT).
+```{r}
+# Tải các thư viện cần thiết
+library(dplyr)
+library(cluster)
+library(factoextra)
+library(ggplot2)
+```
+
+```{r}
+# Đọc tập dữ liệu đã qua Feature Engineering từ Python
+# Lưu ý: Đảm bảo file csv nằm đúng trong thư mục exports
+df <- read.csv("../exports/shadow_it_finops_features.csv")
+```
+```{r}
+# Trích xuất các đặc trưng số học và tiến hành chuẩn hóa (Z-score scaling)
+df_features <- df %>% 
+  select(TotalLogins, MonthlyCostPerUser, Security_Risk_Score, Waste_Risk_Score, TotalInvoiceAmount)
+
+df_scaled <- scale(df_features)
+```
+
+## 3. Chạy thuật toán K-Means
+
+Cố định seed và tiến hành phân cụm người dùng thành 4 nhóm (Clusters) để phân tích đặc tính
+```{r clustering}
+set.seed(123)
+kmeans_model <- kmeans(df_scaled, centers = 4, nstart = 25)
+
+# Gắn nhãn cụm vào dữ liệu gốc
+df$Cluster <- as.factor(kmeans_model$cluster)
+```
+## 4. Trực quan hóa dữ liệu (Data Visualization)
+
+### 4.1. Bản đồ Phân cụm Tổng thể (PCA Plot)
+Sử dụng thuật toán giảm chiều dữ liệu (PCA) để đưa các biến phức tạp về không gian 2D, giúp quan sát rõ mức độ tách biệt của 4 nhóm người dùng.
+```{r}
+fviz_cluster(kmeans_model, data = df_scaled,
+             geom = "point",
+             ellipse.type = "convex",
+             palette = "jco",
+             ggtheme = theme_minimal(),
+             main = "Bản đồ Phân cụm Hành vi Người dùng (PCA 2D)")
+
+```
+
+### 4.2. Ma trận Rủi ro: Tần suất sử dụng vs. Điểm rủi ro
+Biểu đồ phân tán (Scatter Plot) dưới đây đối chiếu trực tiếp giữa số lần đăng nhập và tổng điểm rủi ro, giúp định vị chính xác các "điểm nóng" cần xử lý.
+```{r}
+ggplot(df, aes(x = TotalLogins, y = Total_Risk_Score, color = Cluster)) +
+  geom_point(size = 3.5, alpha = 0.8) +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  labs(title = "Ma trận Nhận diện Rủi ro FinOps & Shadow IT",
+       subtitle = "Phân tích mối tương quan giữa Tần suất sử dụng và Điểm rủi ro tổng hợp",
+       x = "Tổng số lần đăng nhập hệ thống (Total Logins)",
+       y = "Tổng điểm rủi ro (Total Risk Score)",
+       color = "Nhóm (Cluster)") +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(face = "bold", size = 15),
+    plot.subtitle = element_text(color = "gray30", size = 11),
+    axis.title = element_text(face = "bold")
+  )
+```
+
+###5. Phân tích Chuyên sâu và Kết luận
+Thông qua việc đối chiếu không gian đa chiều (PCA) và Ma trận tương quan giữa Tần suất đăng nhập & Điểm rủi ro, mô hình K-Means đã phân tách thành công người dùng nội bộ thành 4 nhóm (Personas) với các đặc trưng hành vi riêng biệt.
+
+5.1. Phân tích Đặc trưng các Cụm (Clusters)
+Cụm 2 (Màu xanh dương) - Nhóm Người dùng Năng suất (Power / Compliant Users):
+
+Đặc điểm: Tần suất đăng nhập rất cao (từ 35 đến hơn 70 lần), nhưng Tổng điểm rủi ro hoàn toàn bằng 0.
+
+Đánh giá: Đây là nhóm nhân viên lý tưởng. Họ sử dụng hệ thống thường xuyên, khai thác tốt giá trị của các phần mềm SaaS được cấp phép và tuân thủ tuyệt đối các quy định bảo mật (không dùng phần mềm lậu).
+
+Cụm 1 (Màu đỏ) - Nhóm Người dùng Cơ bản (Casual / Safe Users):
+
+Đặc điểm: Tần suất đăng nhập ở mức thấp đến trung bình (< 35 lần) và Điểm rủi ro cũng bằng 0.
+
+Đánh giá: Tương tự cụm 2, nhóm này an toàn về mặt bảo mật. Tần suất thấp có thể do đặc thù công việc của họ không yêu cầu sử dụng nhiều phần mềm SaaS.
+
+Cụm 3 (Màu xanh lá) - Nhóm Vi phạm Bảo mật (Shadow IT Users):
+
+Đặc điểm: Có sự tương quan tuyến tính đồng biến rõ rệt giữa số lần đăng nhập và điểm rủi ro. Mức rủi ro rất cao (từ 55 đến gần 80 điểm).
+
+Đánh giá: Người dùng càng thao tác nhiều, hệ thống càng ghi nhận rủi ro tăng cao. Điều này chứng tỏ họ đang liên tục truy cập và sử dụng các ứng dụng không nằm trong danh mục SaaS được phê duyệt (SaaS Catalog). Đây là "điểm nóng" về Shadow IT, mang lại nguy cơ rò rỉ dữ liệu doanh nghiệp.
+
+Cụm 4 (Màu tím) - Nhóm Lãng phí Tài nguyên (Zombie/Wasteful Accounts):
+
+Đặc điểm: Tần suất đăng nhập cực kỳ thấp (gần như bằng 0, dưới 10 lần) nhưng hệ thống vẫn ghi nhận một mức Điểm rủi ro cố định (khoảng 20 điểm).
+
+Đánh giá: Mức rủi ro cố định này không đến từ hành vi sử dụng sai (như cụm 3), mà đến từ "Rủi ro Lãng phí" (Waste Risk Score). Đây là những tài khoản đã được mua License trả phí hàng tháng nhưng người dùng không hề sử dụng (Inactive accounts), gây thất thoát ngân sách IT.
+
+5.2. Đề xuất Hành động (Actionable Insights)
+Từ góc độ quản trị IT và FinOps, báo cáo đề xuất các hành động can thiệp ngay lập tức:
+
+Tối ưu hóa Chi phí (FinOps - Cụm 4): Bộ phận IT cần phối hợp với HR để rà soát danh sách tài khoản thuộc Cụm 4. Tiến hành thu hồi (revoke) hoặc hạ cấp (downgrade) License của các tài khoản này để cắt giảm chi phí duy trì phần mềm vô ích.
+
+Siết chặt Bảo mật (Shadow IT - Cụm 3): Cảnh báo trực tiếp đến các cá nhân thuộc Cụm 3. Cần rà soát xem họ đang sử dụng phần mềm trái phép nào. Nếu phần mềm đó thực sự phục vụ tốt cho công việc, cần đưa qua quy trình đánh giá bảo mật để cấp phép chính thức; ngược lại, phải chặn (block) quyền truy cập ở cấp độ mạng/tường lửa.
+
+Duy trì Hiện trạng (Cụm 1 & 2): Tiếp tục theo dõi và không can thiệp vào trải nghiệm làm việc của nhóm này.
+
+
+
+
+
 
