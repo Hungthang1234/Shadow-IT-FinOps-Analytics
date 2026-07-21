@@ -229,3 +229,7 @@ FROM sso_login_log l
 JOIN hr_employees e ON l.EmpID = e.EmpID
 WHERE AppID = 4 
 GROUP BY Department, AppID, ActionType;
+
+#kiểm tra dữ liệu
+select * 
+from fact_shadow_it_clustered;
